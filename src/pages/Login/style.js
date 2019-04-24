@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: '#C4C4C4',
         margin: 10,
-        height: 32,
+        height: 40,
         width: 294,
         borderRadius: 5
     },
@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
 
     },
     btnCadastrar: {
-        fontSize: 14,
+        fontSize: 18,
         fontWeight: 'bold',
     
     }
