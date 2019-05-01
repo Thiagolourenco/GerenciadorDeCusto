@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Tarefas from './pages/Tarefas'
 import CadastrarTarefas from './pages/CadastrarTarefas'
 import Despesas from './pages/Despesas'
+import CadastrarDespesas from './pages/CadastrarDespesas'
 
 const AppNavigator = createStackNavigator({
         Login,
@@ -15,8 +16,9 @@ const AppNavigator = createStackNavigator({
             Tarefas,
             Despesas
         }),
-        CadastrarTarefas
+        CadastrarTarefas,
+        CadastrarDespesas
 
-    }, {initialRouteName: 'Login'})
+    }, {initialRouteName: 'Home'})
 
 export default createAppContainer(AppNavigator)

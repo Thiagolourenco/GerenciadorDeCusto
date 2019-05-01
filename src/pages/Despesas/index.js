@@ -47,7 +47,7 @@ class Despesas extends Component {
             <View style={styles.footer}>
               <Image source={require('../../../assets/img/money.png')} style={{width: 35, height: 40, marginRight: 15}}/>
               <Text style={{fontSize: 24, fontWeight: 'bold' }}>R$ 200,00</Text>
-              <TouchableHighlight style={{marginLeft: 170}} onPress={() => this.props.navigation.navigate('CadastrarTarefas')}>
+              <TouchableHighlight style={{marginLeft: 170}} onPress={() => this.props.navigation.navigate('CadastrarDespesas')}>
                 <Image source={require('../../../assets/img/plus.png')} style={{width: 50, height: 50}}/>
               </TouchableHighlight>
             </View>
