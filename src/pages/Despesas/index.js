@@ -10,7 +10,10 @@ class Despesas extends Component {
     this.state = {
       list: []
     }
+    this.handleRemover = this.handleRemover.bind(this)
+  }
 
+  componentDidMount(){
     firebase.database().ref('Despesas').on('value', (snapshot) => {
       let state = this.state
       state.list = []
@@ -28,8 +31,12 @@ class Despesas extends Component {
 
       this.setState(state)
     })
-
   }
+
+  handleRemover(){
+    firebase.database().ref('Despesas').child('key').remove()
+  }
+
   render() {
     return (
         <View style={styles.container}>
@@ -39,22 +46,7 @@ class Despesas extends Component {
             </View>
             <FlatList 
                 data={this.state.list}
-                renderItem={({item}) => {
-                  return(
-                    <View style={styles.flatList}>
-                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                         <Text style={styles.nomeDespesas}>{item.nome}</Text>
-                         <Text style={styles.tempoDespesas}>R$ {item.valor}</Text>
-                     </View>
-                     <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                         <Text style={styles.descricaoDespesa}>{item.parcelas}</Text>
-                         <TouchableHighlight>
-                             <Image source={require('../../../assets/img/x-button.png')} style={{marginTop: 5, marginRight: 10}}/>
-                         </TouchableHighlight>
-                     </View>
-                   </View>
-                  )
-                }}
+                renderItem={({item}) => <ListaDespesas data={item}/>}
             />
             <View style={styles.footer}>
               <Image source={require('../../../assets/img/money.png')} style={{width: 35, height: 40, marginRight: 15}}/>
@@ -68,23 +60,24 @@ class Despesas extends Component {
   }
 }
 
-// class ListaTarefa extends Component {
-//   render(){
-//       return(
-//       <View style={styles.flatList}>
-//           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-//               <Text style={styles.nomeDespesas}>{this.props.data.nome}</Text>
-//               <Text style={styles.tempoDespesas}>{this.props.data.tempo}</Text>
-//           </View>
-//           <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-//               <Text style={styles.descricaoDespesa}>{this.props.data.desc}</Text>
-//               <TouchableHighlight>
-//                   <Image source={require('../../../assets/img/x-button.png')} style={{marginTop: 5, marginRight: 10}}/>
-//               </TouchableHighlight>
-//           </View>
-//       </View>
-//       )
-//   }
-// }
+class ListaDespesas extends Component {
+  render(){
+      return(
+      <View style={styles.flatList}>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.nomeDespesas}>{this.props.data.nome}</Text>
+              <Text style={styles.tempoDespesas}>{this.props.data.valor}</Text>
+          </View>
+          <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+              <Text style={styles.descricaoDespesa}>{this.props.data.parcelas}</Text>
+              <TouchableHighlight>
+                  <Image source={require('../../../assets/img/x-button.png')} style={{marginTop: 5, marginRight: 10}}/>
+              </TouchableHighlight>
+          </View>
+      </View>
+      )
+  }
+}
+
 
 export default Despesas

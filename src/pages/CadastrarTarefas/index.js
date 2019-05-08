@@ -25,18 +25,20 @@ class CadastrarTarefas extends Component {
   }
 
   handleCadastrarTarefas(){
-    if(this.state.nome != '' && this.state.tempo != 0 && this.state.descricao != '' && this.state.dataInicio != '' && this.state.dataFim != '' &&  this.state.prioridade != ''){
-      let usuarios = firebase.database().ref('Tarefas')
-      let chave = usuarios.push().key
+    if(this.state.nome.length > 0){
+        let tarefa = firebase.database().ref('Tarefas')
+        let chave = tarefa.push().key
+        
+        tarefa.child(chave).set({
+            nome: this.state.nome,
+            tempo: this.state.tempo,
+            descricao: this.state.descricao,
+            dataInicio: this.state.dataInicio,
+            dataFim: this.state.dataFim,
+            prioridades: this.state.prioridade
+        })
 
-      usuarios.child(chave).set({
-        nome: this.state.nome,
-        tempo: this.state.tempo,
-        descricao: this.state.descricao,
-        dataInicio: this.state.dataInicio,
-        dataFim: this.state.dataFim
-      })
-      alert("Cadastro Realizado Com Sucesso")
+        alert('Despesa Inserida Com Sucesso')
     }
   }
   render() {
@@ -68,7 +70,6 @@ class CadastrarTarefas extends Component {
                   {prioridadesItems}
 
                 </Picker>
-                {/* <TextInput style={styles.input} placeholder="PRIORIDADE" onChangeText={(prioridade) => this.setState({prioridade})}/> */}
             </View>
             <TouchableOpacity style={{marginRight: 250, marginTop: 20}} onPress={() => this.props.navigation.goBack()}>
                 <Image source={require('../../../assets/img/left.png')} style={{width: 25, height: 25}}/>
