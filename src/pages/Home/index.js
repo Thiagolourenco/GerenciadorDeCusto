@@ -7,7 +7,8 @@ class Home extends Component {
   constructor(props){
       super(props)
       this.state = {
-          list: []
+          list: [],
+          listDespesa: []
       }  
   }
 
@@ -25,7 +26,22 @@ class Home extends Component {
             })
         })
 
-        this.setState({state})
+        this.setState(state)
+    })
+
+    firebase.database().ref('Despesas').on('value', snapshot => {
+        let state = this.state
+        state.listDespesa = []
+
+        snapshot.forEach((childItem) => {
+            state.listDespesa.push({
+                key: childItem.key,
+                nome: childItem.val().nome,
+                valor: childItem.val().valor,
+                diaCompra: childItem.val().diaCompra
+            })
+        })
+        this.setState(state)
     })
   }
 
@@ -43,24 +59,16 @@ class Home extends Component {
                 {/* View Exemplo, do FlatList */}
                 <FlatList 
                     data={this.state.list}
-                    renderItem={({item}) => <Lista}
+                    renderItem={({item}) => <ListaTarefas data={item}/>}
                 />
+            </View>
             <View style={{flex: 1}}>
                 <Text style={styles.tituloCusto}> Contas</Text>
-                <View style={styles.flatList}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={styles.nomeConta}>Nome Da Conta</Text>
-                        <Text style={styles.valorConta}>R$ 00,00</Text>
-                    </View>
-                        <Text style={styles.diaConta}>Dia Da Compra && QNT X</Text>
-                    </View>
-                <View style={styles.flatList}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                        <Text style={styles.nomeConta}>Nome Da Conta</Text>
-                        <Text style={styles.valorConta}>R$ 00,00</Text>
-                    </View>
-                        <Text style={styles.diaConta}>Dia Da Compra && QNT X</Text>
-                    </View>
+                {/*FlatList */}
+                <FlatList 
+                    data={this.state.listDespesa}
+                    renderItem={({item}) => <ListaDespesa data={item}/>}
+                /> 
             </View>
         </View>
     );
@@ -72,16 +80,27 @@ class ListaTarefas extends Component {
         return(
             <View style={styles.flatList}>
                 <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                    <Text style={styles.nomeTarefa}></Text>
-                    <Text style={styles.tempoTarefa}>Tempo</Text>
+                    <Text style={styles.nomeTarefa}>{this.props.data.nome}</Text>
+                    <Text style={styles.tempoTarefa}>{this.props.data.tempo}</Text>
                 </View>
-                <Text style={styles.descricaoTarefa}>Descricao</Text>
+                <Text style={styles.descricaoTarefa}>{this.props.data.descricao}</Text>
             </View>
         )
     }
 }
-Home.navigationOptions = {
-    header: null
+
+class ListaDespesa extends Component {
+    render(){
+        return(
+            <View style={styles.flatList}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text style={styles.nomeConta}>{this.props.data.nome}</Text>
+                    <Text style={styles.valorConta}>R$ {this.props.data.valor}</Text>
+                </View>
+                    <Text style={styles.diaConta}> {this.props.data.diaCompra}</Text>
+             </View>
+        )
+    }
 }
 
 export default Home

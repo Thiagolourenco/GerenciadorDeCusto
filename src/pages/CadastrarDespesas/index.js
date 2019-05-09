@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Text, Image ,TextInput, TouchableOpacity} from 'react-native';
+import DatePicker from 'react-native-datepicker'
 import styles from './style'
 import firebase from '../../connect'
 
@@ -9,9 +10,10 @@ class CadastrarTarefas extends Component {
       super(props)
       this.state = {
         nome: '',
-        diaCompra: 0,
+        date: "2016-05-15",
         valor: 0,
-        parcelas: 0
+        parcelas: 0,
+        
       }
 
       this.handleCadastrarDespesas = this.handleCadastrarDespesas.bind(this)
@@ -25,7 +27,7 @@ class CadastrarTarefas extends Component {
 
         despesa.child(chave).set({
             nome: this.state.nome,
-            diaCompra: this.state.diaCompra,
+            diaCompra: this.state.date,
             valor: this.state.valor,
             parcelas: this.state.parcelas
         })
@@ -39,11 +41,35 @@ class CadastrarTarefas extends Component {
         <View style={styles.container}>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>  
                 <Image source={require('../../../assets/img/logo.png')} style={{width: 30, height: 37}}/>
-                <Text style={{fontSize: 24, fontWeight: 'bold', marginLeft: 10}}>Adicionar Tarefas</Text>
+                <Text style={{fontSize: 24, fontWeight: 'bold', marginLeft: 10}}>Adicionar Despesas</Text>
             </View>
             <View style={{marginTop: 20}}>
                 <TextInput style={styles.input} placeholder="NOME" onChangeText={(nome) => this.setState({nome})}/>
-                <TextInput style={styles.input} placeholder="DIA DA COMPRA" onChangeText={(diaCompra) => this.setState({diaCompra})} />
+                <DatePicker
+                    style={{width: 365}}
+                    date={this.state.date}
+                    mode="date"
+                    placeholder="select date"
+                    format="YYYY-MM-DD"
+                    minDate="2016-05-01"
+                    maxDate="2016-06-01"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                      },
+                      dateInput: {
+                        marginLeft: 36
+                      }
+                      // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}}
+                  />
+                {/* <TextInput style={styles.input} placeholder="DIA DA COMPRA" onChangeText={(diaCompra) => this.setState({diaCompra})} /> */}
                 <TextInput style={styles.input} placeholder="VALOR DA COMPRA" onChangeText={(valor) => this.setState({valor})} keyboardType="numeric"/>
                 <TextInput style={styles.input} placeholder="PARCELAS" onChangeText={(parcelas) => this.setState({parcelas})} keyboardType="numeric"/>
 
