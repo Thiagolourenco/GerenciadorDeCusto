@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableHighlight, Image, FlatList } from 'react-native';
+import { View, Text, TouchableOpacity, Image, FlatList } from 'react-native';
 import styles from './style'
 import firebase from '../../connect'
 
@@ -49,9 +49,9 @@ class Home extends Component {
     return (
         <View style={styles.container}>
             <View style={{flexDirection: 'row'}}>
-                <TouchableHighlight onPress={() => this.props.navigation.openDrawer()}>
+                <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
                     <Image source={require('../../../assets/img/menu-button-of-three-horizontal-lines.png')} style={styles.img}/>
-                </TouchableHighlight>
+                </TouchableOpacity>
                 <Text style={styles.titulo}>Gerenciador de Rendas/Tasks</Text>
             </View>
             <View style={{flex: 1}}>

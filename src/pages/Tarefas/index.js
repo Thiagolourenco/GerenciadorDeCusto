@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, Image, TouchableHighlight, FlatList } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity} from 'react-native';
 import styles from './style'
 import firebase from '../../connect'
 
@@ -29,29 +29,30 @@ class Tarefas extends Component {
         })
     }
 
-    handleRemover(){
-        let tarefa = firebase.database().ref('Tarefas')
-        let key = tarefa.push().key
+    // handleRemover(){
+    //     let tarefa = firebase.database().ref('Tarefas')
+    //     let key = tarefa.push().key
 
-        tarefa.child(key).remove()
-    }
+    //     tarefa.child(key).remove()
+    // }
 
     render() {
         return (
             <View style={styles.container}>
                 <View style={{flexDirection: 'row'}}>
-                    <TouchableHighlight onPress={() => this.props.navigation.openDrawer()}>
+                    <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
                         <Image source={require('../../../assets/img/menu-button-of-three-horizontal-lines.png')} style={styles.img}/>
-                    </TouchableHighlight>
+                    </TouchableOpacity>
                     <Text style={styles.titulo}>Tarefas</Text>
                 </View>
                 <FlatList 
                     data={this.state.list}
                     renderItem={({item}) => <ListaTarefa data={item}/>}
+                    
                 />
-                <TouchableHighlight style={{marginLeft: 350, marginBottom: 15}} onPress={() => this.props.navigation.navigate('CadastrarTarefas')}>
+                <TouchableOpacity style={{marginLeft: 350, marginBottom: 15}} onPress={() => this.props.navigation.navigate('CadastrarTarefas')}>
                     <Image source={require('../../../assets/img/plus.png')} style={{width: 50, height: 50}}/>
-                </TouchableHighlight>
+                </TouchableOpacity>
             </View>
             )
         }
@@ -59,19 +60,21 @@ class Tarefas extends Component {
 
 class ListaTarefa extends Component {
     render(){
+        const item = this.props.data
+
         return(
-        <View style={styles.flatList}>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.nomeTarefa}>{this.props.data.nome}</Text>
-                <Text style={styles.tempoTarefa}>{this.props.data.tempo}</Text>
+            <View style={styles.flatList}>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text style={styles.nomeTarefa}>{item.nome}</Text>
+                    <Text style={styles.tempoTarefa}>{item.tempo}</Text>
+                </View>
+                <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                    <Text style={styles.descricaoTarefa}>{item.descricao}</Text>
+                    <TouchableOpacity onPress={() => firebase.database().ref('Tarefas').child(item.key).remove()}>
+                        <Image source={require('../../../assets/img/x-button.png')} style={{marginTop: 5, marginRight: 10}}/>
+                    </TouchableOpacity>
+                </View>
             </View>
-            <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-                <Text style={styles.descricaoTarefa}>{this.props.data.descricao}</Text>
-                <TouchableHighlight onPress={this.handleRemover}>
-                    <Image source={require('../../../assets/img/x-button.png')} style={{marginTop: 5}}/>
-                </TouchableHighlight>
-            </View>
-        </View>
         )
     }
 }

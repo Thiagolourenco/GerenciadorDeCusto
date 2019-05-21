@@ -7,6 +7,7 @@ import Tarefas from './pages/Tarefas'
 import CadastrarTarefas from './pages/CadastrarTarefas'
 import Despesas from './pages/Despesas'
 import CadastrarDespesas from './pages/CadastrarDespesas'
+import Sidebar from './component/Sidebar'
 
 const AppNavigator = createStackNavigator({
         Login,
@@ -15,7 +16,7 @@ const AppNavigator = createStackNavigator({
             Home,
             Tarefas,
             Despesas
-        }),
+        }, {contentComponent: Sidebar}),
         CadastrarTarefas,
         CadastrarDespesas
 

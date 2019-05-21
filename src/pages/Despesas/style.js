@@ -46,6 +46,11 @@ const styles = StyleSheet.create({
         alignItems: 'center'
 
     },
+    img: {
+        width: 36,
+        height: 31,
+        margin: 10
+    }
 })
 
 export default styles

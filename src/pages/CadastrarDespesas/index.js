@@ -10,7 +10,7 @@ class CadastrarTarefas extends Component {
       super(props)
       this.state = {
         nome: '',
-        date: "2016-05-15",
+        date: "2010-01-01",
         valor: 0,
         parcelas: 0,
         
@@ -51,8 +51,8 @@ class CadastrarTarefas extends Component {
                     mode="date"
                     placeholder="select date"
                     format="YYYY-MM-DD"
-                    minDate="2016-05-01"
-                    maxDate="2016-06-01"
+                    minDate="2010-01-01"
+                    maxDate="2040-12-31"
                     confirmBtnText="Confirm"
                     cancelBtnText="Cancel"
                     customStyles={{

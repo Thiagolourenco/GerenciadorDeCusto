@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { View, Text, Image ,TextInput, TouchableOpacity, Picker} from 'react-native';
 import styles from './style'
 import firebase from '../../connect'
+import DatePicker from 'react-native-datepicker'
 
 class CadastrarTarefas extends Component {
 
@@ -11,8 +12,8 @@ class CadastrarTarefas extends Component {
             nome: '',
             tempo: 0,
             descricao: '',
-            dataInicio:'',
-            dataFim: '',
+            dataInicio:'2010-01-01',
+            dataFim: '2040-12-31',
             prioridade: 0,
             prioridades: [
               {nome: 'Baixa'},
@@ -57,8 +58,54 @@ class CadastrarTarefas extends Component {
                 <TextInput style={styles.input} placeholder="NOME" onChangeText={(nome) => this.setState({nome})}/>
                 <TextInput style={styles.input} placeholder="TEMPO" onChangeText={(tempo) => this.setState({tempo})}/>
                 <TextInput style={styles.input} placeholder="DESCRIÇÂO" onChangeText={(descricao) => this.setState({descricao})}/>
-                <TextInput style={styles.input} placeholder="DATA INICIO" onChangeText={(dataInicio) => this.setState({dataInicio})}/>
-                <TextInput style={styles.input} placeholder="DATA FIM" onChangeText={(dataFim) => this.setState({dataFim})}/>
+                <DatePicker
+                    style={{width: 365}}
+                    date={this.state.date}
+                    mode="date"
+                    placeholder="Seleceione Data de Inicio"
+                    format="YYYY-MM-DD"
+                    minDate="2010-01-01"
+                    maxDate="2040-12-31"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                      },
+                      dateInput: {
+                        marginLeft: 36
+                      }
+                      // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}}
+                  />
+                  <DatePicker
+                    style={{width: 365}}
+                    date={this.state.date}
+                    mode="date"
+                    placeholder="Selecione data de Terminio"
+                    format="YYYY-MM-DD"
+                    minDate="2010-01-01"
+                    maxDate="2040-12-31"
+                    confirmBtnText="Confirm"
+                    cancelBtnText="Cancel"
+                    customStyles={{
+                      dateIcon: {
+                        position: 'absolute',
+                        left: 0,
+                        top: 4,
+                        marginLeft: 0
+                      },
+                      dateInput: {
+                        marginLeft: 36
+                      }
+                      // ... You can check the source to find the other keys.
+                    }}
+                    onDateChange={(date) => {this.setState({date: date})}}
+                  />
                 <Text style={{fontSize: 20, marginLeft:10, fontWeight: 'bold'}}>Prioridades</Text> 
                 <Picker 
                   selectedValue={this.state.prioridade}
