@@ -29,6 +29,7 @@ class Sidebar extends Component {
             {this.navLink('Home', 'Home')}
             {this.navLink('Tarefas', 'Tarefas')}
             {this.navLink('Despesas', 'Despesas')}
+            {this.navLink('Config', 'Config')}
         </View>
         <TouchableOpacity style={styles.botaoSair} onPress={this.handleSair}>
             <Text style={styles.btnTextSair}>Sair</Text>
